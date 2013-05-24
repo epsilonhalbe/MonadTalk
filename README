@@ -1,0 +1,10 @@
+This is the literate Haskell source code for a talk for Lambdaheads, a local
+group interested in functional programming at metalab.at (Vienna).
+
+You can use the *.hs/*.lhs files with ghci by `ghci StateExample.hs` and
+`ghci MonadTalk.lhs`.
+
+If you want to compile the slides on your own please change the extension of
+*.lhs to *.tex and compile with LuaTex.
+
+

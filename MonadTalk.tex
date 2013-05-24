@@ -1,0 +1,562 @@
+\documentclass{beamer}
+% please use lualatex to compile this document
+
+\usepackage[ngerman]{babel}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage{ulem}
+\usepackage{mathtools}
+
+\usepackage{color}
+\definecolor{darkgray} {gray}{0.35}
+\definecolor{back}     {gray}{0.15}
+
+\definecolor{purple}       {rgb} {0.80, 0.20      , 0.80}
+\definecolor{lightyellow}  {rgb} {0.80, 0.20      , 0.80}
+\definecolor{darkturquoise}{rgb} {0   , 0.807843  , 0.819608}
+\definecolor{deeppink}     {rgb} {1   , 0.0784314 , 0.576471}
+
+\usepackage{listings}
+\lstdefinelanguage{myHaskell}{
+    %basicstyle=\color{white}\ttfamily\tiny,
+    basicstyle=\color{white}\ttfamily\scriptsize,
+    %basicstyle=\color{white}\ttfamily\footnotesize,
+    %basicstyle=\color{white}\ttfamily\small,
+    backgroundcolor=\color{back},
+    %frameshape={RYRYNYYYY}{yny}{yny}{RYRYNYYYY}, %contornos... muito nice...
+    sensitive=true,
+    morecomment=[l][\color{darkgray}\scriptsize]{--},
+    morecomment=[s][\color{darkgray}\scriptsize]{\{-}{-\}},
+    morestring=[b]",
+    stringstyle=\color{lightyellow},
+    showstringspaces=false,
+    numbers=none,
+    firstnumber=\thelstnumber,
+    numberstyle=\color{gray}\tiny,
+    numberblanklines=true,
+    mathescape=false,
+    texcl=false,
+    showspaces=false,
+    showtabs=false,
+    frameround=tttt,
+    xleftmargin=15pt,
+    xrightmargin=-20pt,
+    literate={+}    {{$\textcolor{deeppink}{+}$}}1
+             {/}    {{$\textcolor{deeppink}{/}$}}1
+             {*}    {{$\textcolor{deeppink}{*}$}}1
+             {=}    {{$\textcolor{deeppink}{=}$}}1
+             {>}    {{$\textcolor{deeppink}{>}$}}1
+             {<}    {{$\textcolor{deeppink}{<}$}}1
+             {\\}   {{$\textcolor{deeppink}{λ}$}}1
+             {\\\\} {{\char`\\\char`\\}}1
+             {->}   {{$\textcolor{deeppink}{→}$}}2
+             {>=}   {{$\textcolor{deeppink}{≥}$}}2
+             {<-}   {{$\textcolor{deeppink}{←}$}}2
+             {<=}   {{$\textcolor{deeppink}{≤}$}}2
+             {=>}   {{$\textcolor{deeppink}{⇒}$}}2
+             {\ .}  {{$\textcolor{deeppink}{∘}$}}2
+             {\ .\ }{{$\textcolor{deeppink}{∘}$}}2
+             {|}    {{$\textcolor{deeppink}{∣}$}}1
+             {::}   {{$\textcolor{deeppink}{::}$}}2
+             {:}    {{$\textcolor{deeppink}{:}$}}2
+             {>>}   {{$\textcolor{deeppink}{>>}$}}2
+             {>>=}  {{$\textcolor{deeppink}{>>=}$}}3
+             {<>}   {{$\textcolor{deeppink}{<>}$}}2
+             {<*>}  {{$\textcolor{deeppink}{<∗>}$}}3
+             {>=>}  {{$\textcolor{deeppink}{>=>}$}}3
+             {<$>}  {{$\textcolor{deeppink}{<\$>}$}}3,
+    emph = {[1] FilePath,IOError,abs,acos,acosh,all,and,any,appendFile,approxRational,asTypeOf,asin,
+                asinh,atan,atan2,atanh,basicIORun,break,catch,ceiling,chr,compare,concat,concatMap,
+                const,cos,cosh,curry,cycle,decodeFloat,denominator,digitToInt,div,divMod,drop,
+                dropWhile,either,elem,encodeFloat,enumFrom,enumFromThen,enumFromThenTo,enumFromTo,
+                error,even,exp,exponent,fail,filter,flip,floatDigits,floatRadix,floatRange,floor,
+                fmap,foldl,foldl1,foldr,foldr1,fromDouble,fromEnum,fromInt,fromInteger,fromIntegral,
+                fromRational,fst,gcd,getChar,getContents,getLine,head,id,inRange,index,init,intToDigit,
+                interact,ioError,isAlpha,isAlphaNum,isAscii,isControl,isDenormalized,isDigit,isHexDigit,
+                isIEEE,isInfinite,isLower,isNaN,isNegativeZero,isOctDigit,isPrint,isSpace,isUpper,iterate,
+                last,lcm,length,lex,lexDigits,lexLitChar,lines,log,logBase,lookup,map,mapM,mapM_,max,
+                maxBound,maximum,maybe,min,minBound,minimum,mod,negate,not,notElem,null,numerator,odd,
+                or,ord,otherwise,pi,pred,primExitWith,print,product,properFraction,putChar,putStr,putStrLn,quot,
+                quotRem,range,rangeSize,read,readDec,readFile,readFloat,readHex,readIO,readInt,readList,readLitChar,
+                readLn,readOct,readParen,readSigned,reads,readsPrec,realToFrac,recip,rem,repeat,replicate,return,
+                reverse,round,scaleFloat,scanl,scanl1,scanr,scanr1,seq,sequence,sequence_,show,showChar,showInt,
+                showList,showLitChar,showParen,showSigned,showString,shows,showsPrec,significand,signum,sin,
+                sinh,snd,span,splitAt,sqrt,subtract,succ,sum,tail,take,takeWhile,tan,tanh,threadToIOResult,toEnum,
+                toInt,toInteger,toLower,toRational,toUpper,truncate,uncurry,undefined,unlines,until,unwords,unzip,
+                unzip3,userError,words,writeFile,zip,zip3,zipWith,zipWith3 },
+    %emph = {[2] Bool,Char,Double,Either,Float,IO,Integer,Int,Maybe,Ordering,Rational,Ratio,ReadS,ShowS,String },
+    emph = {[2] import,hiding},
+    emph = {[3] case, do, else, if, import, in, infixl, infixr, let, of, primitive, then},
+    emph = {[4] class, data, deriving,instance, module, newtype, type, where},
+    emph = {[5] EQ,False,GT,Just,LT,Left,Nothing,Right,True,Show,Eq,Ord,Num},
+    emph = {[6] quot,rem,div,mod,elem,notElem,seq },
+    emphstyle = {[1]\color{white}},
+    emphstyle = {[2]\color{green}},
+    emphstyle = {[3]\color{deeppink}\textbf},
+    emphstyle = {[4]\color{darkturquoise}\textbf},
+    emphstyle = {[5]\color{purple}\textbf},
+    emphstyle = {[6]\textbf}
+}
+
+\lstnewenvironment{code}
+{\lstset{language=myHaskell}}{}
+
+\usetheme{Frankfurt}
+\usefonttheme{professionalfonts}
+\setbeamercolor{normal text}{fg=white,bg=black!90}
+\setbeamercolor{structure}{fg=white}
+
+\setbeamercolor{alerted text}{fg=red!85!black}
+
+\setbeamercolor{item projected}{use=item,fg=black,bg=item.fg!35}
+
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=structure.fg!95!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
+\setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
+
+\setbeamercolor*{framesubtitle}{fg=white}
+
+\setbeamercolor*{block title}{parent=structure,bg=black!60}
+\setbeamercolor*{block body}{fg=black,bg=black!10}
+\setbeamercolor*{block title alerted}{parent=alerted text,bg=black!15}
+\setbeamercolor*{block title example}{parent=example text,bg=black!15}
+
+\title{Haskell full of Buzzwords}
+\author{Martin Heuschober}
+\institute{metalab.at/wiki/Lambdaheads}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\iin}{in}
+\DeclareMathOperator{\ddo}{do}
+\DeclareMathOperator{\llet}{let}
+\DeclareMathOperator{\fmap}{fmap}
+\DeclareMathOperator{\pure}{pure}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Inhalt}
+    \tableofcontents
+\end{frame}
+
+\section{Haskell} % fold \begin{section}
+\label{sec:haskell}
+
+\begin{frame}[fragile]{Haskell}
+\begin{itemize}
+    \item functional
+    \item lazy
+    \item statically, strongly typed
+    \item abstract ;-)
+\end{itemize}
+\end{frame}
+
+\subsection{a bit of syntax} % fold \begin{subsection}
+\begin{frame}[fragile]{a bit of syntax}
+\begin{code}% not actually code just example
+    import Blah as Blubb hiding (foo, Foo(..))
+    type MyFoo = MyFoo1 |MyFoo2 | MyFoo3 {t::MyFoo, g::MyFoo}
+    newtype Bar = Bar {runBar :: b -> (a,b)}
+\end{code}
+$a$ and $b$ are type variables and a main ingredient in Haskell
+code, e.g. when writing type annotations to functions
+\begin{code}% not really code
+    foo1 :: a -> [a]
+    foo1 x = [x] -- the list with a single element namely x
+\end{code}
+using a point-free style which is ubiquitous in Haskell code we can formulate
+this equivalently as
+\begin{code}% not really code
+    foo2 :: a -> [a]
+    foo2 = (:[])
+\end{code}
+here ‘$(:)$’ is the cons operator and ‘$[]$’ denotes the empty-list
+\end{frame}
+
+\subsection{polymorphism} % fold \begin{subsection}
+\begin{frame}[fragile]{Polymorphism}
+Haskells way to express polymorphism is via type-classes
+\begin{code}% not really code
+    class Fooable a where -- not the Java kind of classes
+        foo :: [a] -> (a -> a) -> a
+\end{code}
+but similar to Java interfaces (or so I've heard).
+If something wants to be ‘$Fooable$’ it has to implement this function ‘$foo$’,
+which takes a list of ‘$as$’ and a function ‘$f$’ and generates something of
+type ‘$a$’.
+\end{frame}
+
+\begin{frame}[fragile]{Polymorphism}
+We can create instances for type-classes, unless there is already one defined (we
+will see that for the ‘$Applicative$’ type-class for lists later on).
+\begin{code}% not really code
+    instance Foo [] where
+        foo [] _ = undefined -- should never happen ;-)
+        foo (x:xs) f = f x
+\end{code}
+Here $undefined$ is a special function, which always type-checks but generates a,
+run-time error if invoked, useful for getting a structure.
+Another prominent technique can be seen in the last line - where the list is
+decomposed in $head$ and $tail$.
+\end{frame}
+
+\subsection{Functors - Applicative Functors - Monads}
+\begin{frame}[fragile]{Functors - Applicative Functors - Monads}
+Beginning from this section, all code presented is executable with your
+favourite Haskell compiler, feel free to load this file into $ghci$ and make your
+own experiments.
+\end{frame}
+
+\subsection{Abstraction}
+\begin{frame}[fragile]{Abstraction}
+As one of Haskell's features we listed abstraction, which is only one side of
+the medal it is also really hard to get your head around.
+
+In Haskell we have a great type system and one feature of it is type
+constructors which take a more basic type and produce a new type. Most prominent
+the list type $[a]$, but there are also $Trees$, $Vectors$, $Matrices$, $Tries$ and much
+more (including the kitchen sink). And one thing is we want to modify the values
+in such a “container”. This lead to the discovery of $Functors$, originating from
+the rather obscure mathematical branch of category theory.
+\end{frame}
+
+\subsection{More Abstraction}
+\begin{frame}[fragile]{More Abstraction}
+Another problem was how to do chain stateful or even worse actions with side
+effects together. The first idea was to use continuation-passing style, but
+being involved with category theory already, Phil Wadler came up with the term
+of $Monads$. Later on concepts like $Applicative Functors$, $Arrows$ and much
+more were added
+\end{frame}
+
+\subsection{Setup}
+\begin{frame}[fragile]{Setup}
+\begin{code}
+    import Prelude hiding (Functor, Monad, Maybe(..), fmap, (>>=),(>>))
+\end{code}
+We start with importing the standard library $Prelude$, where we hide all
+operators, which we will define later on ourselves.
+\end{frame}
+
+\section{Functors} % fold \begin{subsection}
+\label{sec:functors}
+
+\subsection{Functors}
+\begin{frame}[fragile]{Functors}
+The first solution we see is the class $Functor$
+\begin{code}
+    class Functor f where
+        fmap :: (a -> b) -> f a -> f b
+\end{code}
+And though Haskell cannot enforce it, every instance of $Functor$ should satisfy
+these two laws:
+\begin{align*}
+                               \fmap(\id)&= \id\\
+                      \fmap(g) ∘ \fmap(h)&= \fmap (g ∘ h)
+\end{align*}
+\end{frame}
+
+\subsection{Functor - examples}
+\begin{frame}[fragile]{Functor - examples}
+The first and most obvious Functor we have is the list type
+\begin{code}
+    instance Functor [] where
+        fmap = map
+\end{code}
+Another example is the type of $Maybe$, which indicates a state of failure or
+success
+\begin{code}
+    data Maybe a = Nothing | Just a
+\end{code}
+and we make it an instance of $Functor$ by
+\begin{code}
+    instance Functor Maybe where
+        fmap f Nothing  = Nothing
+        fmap f (Just a) = Just (f a)
+\end{code}
+\end{frame}
+
+\subsection{profing the functor laws for Maybe}
+\begin{frame}[fragile]{profing the functor laws for Maybe}
+ TODO
+\end{frame}
+
+\section{Applicatives} % fold \begin{subsection}
+\label{sec:applicatives}
+
+\subsection{Intro}
+\begin{frame}[fragile]{Intro}
+A more recent development (than functors and monads) is the class of
+$Applicative Functors$ or short $Applicatives$. Which came from the need
+of applying functions from inside a “container”. Let's say we have a list of
+functions $[f₁,…,f₉]$ and want to apply these to another list of $[1…3]$.
+If we only have plain old $Functor$ no way we can do that - so we define:
+\end{frame}
+
+\subsection{Applicative Functors}
+\begin{frame}[fragile]{Applicative Functors}
+\begin{code}
+    class (Functor f)=> Applicative f where
+        pure  :: a -> f a
+        (<*>) :: f (a -> b) -> (f a -> f b)
+\end{code}
+Note that the first function could also have the names return, singleton, unit
+point. We will name the second function apply, which gave this type-class its
+name. As we have the class constraint of $f$ being a $Functor$ we introduce the
+symbol of
+\begin{code}
+    (<$>) ::(Applicative f) => (a -> b) -> (f a -> f b)
+    (<$>)  = fmap
+\end{code}
+which leads to a more readable code, if you have gotten used to it.
+\end{frame}
+
+\subsection{Again examples}
+\begin{frame}[fragile]{Again examples}
+\begin{code}
+    instance Applicative [] where
+        pure x = [x]
+        fs <*> xs = [f x | f <- fs, x <- xs]
+\end{code}
+And for the $Maybe$ type
+\begin{code}
+    instance Applicative Maybe where
+        pure a = Just a
+        (Just f) <*> (Just a) = Just (f a)
+\end{code}
+\end{frame}
+
+\subsection{another list instance}
+\begin{frame}[fragile]{another list instance}
+To prevent clashes from happening we define:
+\begin{code}
+    newtype ZipList a = ZipList { getZipList :: [a] }
+\end{code}
+this is a “tabula rasa” version of the type $[a]$, all associated instances are
+forgotten. So we have to make $ZipList$ an instance of $Functor$ by
+\begin{code}
+    instance Functor ZipList where
+        fmap f (ZipList zs) = ZipList (map f zs)
+\end{code}
+and an instance of $Applicative$
+\begin{code}
+    instance Applicative ZipList where
+        pure z = ZipList (repeat z)
+        ZipList fs <*> ZipList zs = ZipList (zipWith ($) fs zs)
+\end{code}
+\end{frame}
+\subsection{Applicative Law}
+\begin{frame}[fragile]{Applicative Law}
+Again we have a law for the Applicative type-class
+\begin{align*}
+                           f <\$> xs = (\pure f) <*> xs
+\end{align*}
+and of course we have all the previous laws for functors.
+\end{frame}
+
+\subsection{Some extra functions}
+\begin{frame}[fragile]{Some extra functions}
+The module $Control.Applicative$ provides the following helper functions:
+A variant of $<*>$ with the arguments reversed.
+\begin{code}
+    (<**>) :: Applicative f => f a -> f (a -> b) -> f b
+    (<**>) = liftA2 (flip ($))
+\end{code}
+Lift a function, this function may be used as a value for $\fmap$ in a $Functor$ instance.
+\begin{code}
+    liftA :: Applicative f => (a -> b) -> f a -> f b
+    liftA f a = pure f <*> a
+\end{code}
+Lift a binary function to actions.
+\begin{code}
+    liftA2 :: Applicative f => (a->b->c)->f a->f b->f c
+    liftA2 f a b = f <$> a <*> b
+\end{code}
+and furthermore \texttt{liftA3} and \texttt{optional}.
+\end{frame}
+
+\subsection{And now for the juicy part}
+\begin{frame}[fragile]{And now for the juicy part}
+\begin{center}
+    Functor and Applicative are clear so far ??
+\end{center}
+\end{frame}
+
+\section{Monads} % fold \begin{subsection}
+\label{sec:monads}
+\subsection{Intro}
+\begin{frame}[fragile]{Intro}
+$Monads$ were brought to solve the problem of IO in Haskell - though before that
+people used a continuation-passing style to chain actions after one another. Btw
+it turns out there is a Monad called $Cont$, the continuation monad, which has
+some universal property, but unfortunately I had no time to investigate that -
+maybe more the next time about that.
+
+From a compiler's point of view a monad is nothing more than a type class, but
+as monads are ubiquitous in Haskell code, almost every program has some part in
+the $IO$ Monad, there is some syntactic sugar provided - the so called $do$
+notation. Which we will meet in a few slides.
+\end{frame}
+\subsection{Monads}
+\begin{frame}[fragile]{Monads}
+The most \sout{famous} dreaded concept when learning Haskell
+\begin{code}
+    class Monad m where
+        return :: a -> m a
+        (>>=)  :: m a -> (a -> m b) -> m b -- bind
+        (>>)   :: m a -> m b -> m b
+        f >> b = f >>= (\_ -> b)
+        fail :: String -> m a
+\end{code}
+I will show that every monad is an applicative, which could be included
+in the class definition as a constraint, but the use of monads pre-dates the use
+of both functors and applicatives, so one came to the definition above.
+Note that the definition of the function $(>>)$ is optional as it can be
+implemented by using $(>>=)$ it can be thought of as follows:
+the side effects of $f$ are executed whilst the result is thrown away.
+\end{frame}
+
+\subsection{An example - Please}
+\begin{frame}[fragile]{An example - Please}
+The $Maybe$ Monad:
+\begin{code}
+    instance Monad Maybe where
+        return = Just -- point free style
+        Nothing >>= f = Nothing
+        Just x >>= f = f x
+        fail _ = Nothing
+\end{code}
+and applied
+\begin{code}% not really code
+    Just 3 >>= (\x->Just(x+3)) >>= (\x -> Just (y*3))
+    > Just 12
+    Nothing >>= (\x->Just(x+3)) >>= (\x -> Just (y*3))
+    > Nothing
+    Just 3 >>= (\x->Just(x+3)) >>= (\x-> Just (x*3) >> return x)
+    >  Just 6
+\end{code}
+\end{frame}
+\subsection{Do-Notation}
+\begin{frame}[fragile]{Do-Notation}
+As one can see the examples above are a bit to work your head around - so to
+make Haskell a bit more beginner-friendly the Do-Notation was introduced, this
+is Especially useful within the $IO$ monad.
+\begin{code}
+    iofunction :: IO ()
+    iofunction = do putStrLn "enter your name"
+                    a <- getLine
+                    let caps = a++"!"
+                    putStrLn ("Hello my friend " ++ caps)
+\end{code}
+\end{frame}
+\begin{frame}[fragile]{Do-Notation}
+and we have the basic transformations
+\begin{align*}
+    \ddo e                      & ⟶ e\\
+    \ddo \{e; stmts\}           & ⟶ e >> \ddo \{stmts\}\\
+    \ddo \{v ← e; stmts\}       & ⟶ e >>=λv → \ddo \{stmts\}\\
+    \ddo \{\llet decls; stmts\} & ⟶ \llet decls \iin \ddo \{stmts\}
+\end{align*}
+\end{frame}
+\begin{frame}[fragile]{Do-Notation}
+so the function above could be alternatively written in the form
+\begin{code}%
+    iofunction' :: IO ()
+    iofunction' = putStrLn "enter your name" >>
+                  getLine >>= \a ->
+                  let caps = a++"!" in
+                  putStrLn ("Hello my friend " ++ caps)
+\end{code}
+Note: actually this code is not working - remember we have hidden (>>) and (>>=)
+\end{frame}
+\section{State - an example} % fold \begin{subsection}
+\label{sec:state:an:example}
+\subsection{State - example}
+\begin{frame}[fragile]{State - example}
+All of the code in this example will be available seperately
+\begin{code}%
+    newtype State s a = State {runState :: s -> (a, s)}
+\end{code}
+and we can make $State$ an instance of $Monad$
+\begin{code}%
+    instance Monad (State s) where
+        return x = State $ \s -> (x,s)
+        (State h) >>= f = \s -> let (a, newState) = h s
+                                    (State g)     = f a
+                                in  g newState
+\end{code}
+from ~\url{learnyouahaskell.com} we take the example. Of a Stack State
+\end{frame}
+\begin{frame}[fragile]{State - example}
+and
+\begin{code}%
+    type Stack = [Int]
+\end{code}
+for such a stack we can define operations
+\begin{code}%
+    pop :: State Stack Int
+    pop = state $ \(x:xs) -> (x, xs)
+
+    push :: Int -> State Stack ()
+    push a = state $ \xs -> ((),a:xs)
+\end{code}
+\end{frame}
+
+\begin{frame}[fragile]{State - example}
+and
+\begin{code}%
+stackManip :: State Stack Int
+stackManip = do push 3
+                pop
+                pop
+\end{code}
+or equivalently
+\begin{code}%
+stackManip' :: State Stack Int
+stackManip' = push 3 » pop » pop
+\end{code}
+\end{frame}
+\section{Monad Laws}
+\subsection{Monad laws}
+\begin{frame}[fragile]{Monad laws}
+Monad has the following laws
+\begin{gather*}
+    return~a >>= f = f a\\
+    m >>= return = m\\
+    m >>= (λx → k x >>= h) = (m >>= k) >>= h\\
+    fmap~f~xs = xs >>= return ∘ f = liftM~f~xs
+\end{gather*}
+
+\end{frame}
+\begin{frame}[fragile]{Monad laws}
+or with a helper function
+\begin{code}%
+    (>=>) :: (Monad m) => (a -> m b) -> (b -> m c) -> a -> m c
+    (f >=> g) x = return x >>= g >>= f
+\end{code}
+\begin{gather*}
+    return~a >=> f = f\\
+    f >=> return = f\\
+    (f >=> g) >=> h = f >=> (g >=> h)
+\end{gather*}
+\end{frame}
+
+\section{Arrows}
+\begin{frame}[fragile]{Arrows}
+we will see next(?) time
+\end{frame}
+
+\section{Bibliography}
+\begin{frame}[fragile]{Bibliography}
+\begin{itemize}
+    \item \url{www.learnyouahaskell.com}
+    \item Typeclassopedia - Brent Yorgey (in TheMonadReader 13)
+    \item www.haskell.org
+\end{itemize}
+\end{frame}
+\end{document}
